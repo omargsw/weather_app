@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather_app/app/config/routing/app_router.dart';
+import 'package:weather_app/core/components/custom_button.dart';
 import 'package:weather_app/core/components/custom_text_form_field.dart';
 import 'package:weather_app/core/images/app_images.dart';
 import 'package:weather_app/core/styles/app_colors.dart';
 import 'package:weather_app/core/styles/app_text_style.dart';
+import 'package:weather_app/core/utils/helpers/app_constants.dart';
+import 'package:weather_app/core/utils/helpers/app_logger.dart';
+import 'package:weather_app/core/utils/helpers/app_secure_storage.dart';
+import 'package:weather_app/core/utils/helpers/app_snackbar.dart';
 import 'package:weather_app/core/utils/helpers/app_validator.dart';
-import 'package:weather_app/features/register/presentation/bloc/register_bloc.dart';
+import 'package:weather_app/features/auth/presentation/bloc/register_bloc/register_bloc.dart';
 import 'package:weather_app/service_locator_imports.dart';
 
 import '../../../../core/utils/helpers/app_input_formatter.dart';
@@ -27,13 +32,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ServiceLocator.inject<RegisterBloc>(),
-      child: BlocBuilder<RegisterBloc, RegisterState>(
+      child: BlocConsumer<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          if (state is ErrorSignUpState) {
+            AppSnackBar.show(
+                context: context,
+                message: state.errorCode ?? AppStrings.unknownError.tr(),
+                type: SnackBarType.error);
+          } else if (state is SuccessSignUpState) {
+            final uuid = state.uuid;
+            AppLogger.debug(uuid.toString());
+            AppSecureStorage.saveData(key: AppConstants.userID, value: uuid);
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+            AppSnackBar.show(
+                context: context,
+                message: AppStrings.accountRegisteredSuccessfully.tr(),
+                type: SnackBarType.success);
+          }
+        },
         builder: (context, state) {
           final bloc = context.read<RegisterBloc>();
           return Scaffold(
-            // appBar: AppBar(
-            //   title: Text('Register'),
-            // ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(
@@ -56,8 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                         inputFormatters: [AppInputFormatter.emailFormatter()],
                         validator: AppValidator.validateEmail,
-                        // onFieldSubmitted: (_) => bloc.validateForm(),
-                        // onEditingComplete: () => bloc.validateForm(),
                       ),
                       Gap(20),
                       CustomTextFormField(
@@ -78,8 +95,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                         validator: AppValidator.validatePassword,
                         obscureText: bloc.obscurePass,
-                        // onFieldSubmitted: (_) => bloc.validateForm(),
-                        // onEditingComplete: () => bloc.validateForm(),
                       ),
                       Gap(20),
                       CustomTextFormField(
@@ -102,16 +117,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             AppValidator.validateConfirmPassword(
                                 value, bloc.passController.text),
                         obscureText: bloc.obscureConfPass,
-                        // onFieldSubmitted: (_) => bloc.validateForm(),
-                        // onEditingComplete: () => bloc.validateForm(),
                       ),
                       Gap(60),
-                      ElevatedButton(
+                      CustomButton(
+                        title: AppStrings.register.tr(),
                         onPressed: () {
-                          if (bloc.formKey.currentState!.validate()) {}
+                          if (bloc.formKey.currentState!.validate()) {
+                            bloc.add(
+                              SignUpEvent(
+                                email: bloc.emailController.text,
+                                confirmPassword: bloc.confPassController.text,
+                              ),
+                            );
+                          }
                         },
-                        child: Text(AppStrings.register.tr()),
-                        //  ButtonLoading()
+                        isLoading: state is LoadingSignUpState,
                       ),
                       Gap(20),
                       LoginAndRegisterRichText(isLogin: false)

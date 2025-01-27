@@ -1,7 +1,7 @@
 class AppConstants {
   AppConstants._();
 
-  static String accessToken = '';
+  static String userID = '';
   static String refreshToken = 'refresh_token';
   static String chosenLang = 'chosen_lang';
 

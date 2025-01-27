@@ -13,5 +13,15 @@ class AppStrings {
   static const haveNotAccount = "Don't have an account?";
   static const loginNow = "Login now";
   static const registerNow = "Register now";
-   static const errorCode = "errorCode";
+  static const errorCode = "errorCode";
+  static const unexpectedError = "unexpectedError";
+  static const unknownError = "unknownError";
+  static const noInternetConnectionFailure = "noInternetConnectionFailure";
+  static const serverFailure = "serverFailure";
+  static const tryAgain = "tryAgain";
+
+  static const welcomeBack = "Welcome Back,";
+  static const weather = "Weather";
+  static const accountRegisteredSuccessfully =
+      "Account registered successfully";
 }

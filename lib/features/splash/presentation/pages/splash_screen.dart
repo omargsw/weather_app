@@ -6,7 +6,6 @@ import 'package:weather_app/core/styles/app_colors.dart';
 import 'package:weather_app/core/styles/app_text_style.dart';
 import 'package:weather_app/features/splash/presentation/bloc/splash_bloc.dart';
 
-import '../../../../app/config/routing/app_arguments.dart';
 import '../../../../app/config/routing/app_router.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -20,10 +19,7 @@ class SplashScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SplashFinishedState) {
             Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.registerScreen,
-                arguments: {AppArguments.pageIndex: 0},
-                (route) => false);
+                context, AppRoutes.homeScreen, (route) => false);
           }
         },
         child: Scaffold(

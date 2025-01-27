@@ -6,19 +6,16 @@ sealed class RegisterEvent extends Equatable {
 
 class SignUpEvent extends RegisterEvent {
   final String confirmPassword;
-  final String password;
   final String email;
 
   const SignUpEvent({
     required this.confirmPassword,
-    required this.password,
     required this.email,
   });
 
   @override
   List<Object?> get props => [
         confirmPassword,
-        password,
         email,
       ];
 }

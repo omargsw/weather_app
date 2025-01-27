@@ -1,32 +1,29 @@
-// import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:weather_app/core/errors/exceptions.dart';
+import 'package:weather_app/core/utils/helpers/app_constants.dart';
+import 'package:weather_app/core/utils/helpers/app_logger.dart';
+import 'package:weather_app/core/utils/helpers/app_secure_storage.dart';
+import 'package:weather_app/features/home/data/models/user_info_model.dart';
 
-// import 'package:dio/dio.dart';
+class UserInfoRemoteDataSource {
+  Future<UserModel> getUserInfoByUuid() async {
+    try {
+      String uuid =
+          await AppSecureStorage.getData(key: AppConstants.userID) ?? "no user";
+      DocumentSnapshot<Map<String, dynamic>> document =
+          await FirebaseFirestore.instance.collection('users').doc(uuid).get();
 
-
-// import '../../../../../core/errors/exceptions.dart';
-// import '../../../../../core/locale/app_languages.dart';
-// import '../../../../../core/utils/api/api_client.dart';
-// import '../../../../../core/utils/helpers/app_constants.dart';
-// import '../../../../../core/utils/helpers/app_secure_storage.dart';
-
-class HomeRemoteDataSource {
-  // Future<UserProfileModel> fetchUserInfo() async {
-  //   final LanguageChanging languageChanging = LanguageChanging();
-  //   final String currentLang = await languageChanging.getAppLanguage();
-  //   AppLogger.info("currentLang : $currentLang");
-  //   final String token = await AppSecureStorage.getData(key: AppConstants.accessToken) ?? "";
-  //   final response = await ApiClient.getData(
-  //     url: currentLang + ApiConstants.userInfo,
-  //     headers: {ApiConstants.authorization: 'Bearer $token'},
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final userModel = UserProfileModel.fromJson(response.data);
-  //     return userModel;
-  //   } else {
-  //     AppLogger.warning(response.data);
-  //     throw ServerException(errorMessage: AppStrings.errorCode.tr().replaceAll(AppExpressions.textPattern, response.statusCode.toString()));
-  //   }
-  // }
-
+      if (document.exists && document.data() != null) {
+        // Map Firestore data to UserModel
+        return UserModel.fromMap(document.data()!);
+      } else {
+        throw ServerException(errorMessage: 'User with UUID $uuid not found.');
+      }
+    } catch (e) {
+      AppLogger.warning('Error fetching user info: $e');
+      // throw Exception('Failed to fetch user information: $e');
+      throw ServerException(
+          errorMessage: 'Failed to fetch user information: $e');
+    }
+  }
 }

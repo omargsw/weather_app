@@ -12,8 +12,8 @@ Route? onGenerateRoute(RouteSettings settings) {
 
     case AppRoutes.registerScreen:
       return AppPageRoute(builder: (context) => RegisterScreen());
-    // case AppRoutes.registerScreen:
-    //   return AppPageRoute(builder: (context) => RegisterScreen());
+    case AppRoutes.loginScreen:
+      return AppPageRoute(builder: (context) => LoginScreen());
     // case AppRoutes.registerScreen:
     //   return AppPageRoute(builder: (context) => RegisterScreen());
     // case AppRoutes.registerScreen:

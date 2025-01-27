@@ -10,10 +10,10 @@ sealed class RegisterState extends Equatable {
 final class RegisterInitial extends RegisterState {}
 
 class SuccessSignUpState extends RegisterState {
-  // final AuthModel authModel;
-  const SuccessSignUpState();
-  // @override
-  // List<Object> get props => [authModel];
+  final String uuid;
+  const SuccessSignUpState({required this.uuid});
+  @override
+  List<Object> get props => [uuid];
 }
 
 class ErrorSignUpState extends RegisterState {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/features/auth/presentation/pages/login_screen.dart';
 import 'package:weather_app/features/home/presentation/view/home_screen.dart';
-import 'package:weather_app/features/register/presentation/view/register_screen.dart';
+import 'package:weather_app/features/auth/presentation/pages/register_screen.dart';
 
 import '../../../core/utils/helpers/app_strings.dart';
 import '../../../features/splash/presentation/pages/splash_screen.dart';

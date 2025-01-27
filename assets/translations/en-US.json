@@ -1,4 +1,8 @@
 {
-    "appName": "My Weather"
-    
+    "appName": "My Weather",
+    "unexpectedError": "An unexpected error occurred.\nPlease try again later.",
+    "unknownError": "Unknown",
+    "noInternetConnectionFailure": "No internet connection. Check your connection and try again.",
+    "serverFailure": "A server error occurred.\nPlease try again later.",
+    "tryAgain": "Try again"
 }

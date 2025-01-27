@@ -5,19 +5,25 @@ import 'package:weather_app/core/network/network_info.dart';
 import 'package:weather_app/core/utils/helpers/app_logger.dart';
 
 import '../../../../core/utils/helpers/app_typedef.dart';
-import '../../data/data_sources/remote/register_remote_data_source.dart';
+import '../../data/data_sources/remote/auth_remote_data_source.dart';
 
-class RegisterRepository {
-  final RegisterRemoteDataSource registerRemoteDataSource;
+class AuthRepository {
+  final AuthRemoteDataSource authRemoteDataSource;
   final NetworkInfo networkInfo;
 
-  RegisterRepository(
-      {required this.registerRemoteDataSource, required this.networkInfo});
+  AuthRepository(
+      {required this.authRemoteDataSource, required this.networkInfo});
 
   FutureEither<String> register(
       {required String email, required String password}) async {
-    return performRequest(() => registerRemoteDataSource
+    return performRequest(() => authRemoteDataSource
         .registerWithEmailAndPassword(email: email, password: password));
+  }
+
+  FutureEither<String> login(
+      {required String email, required String password}) async {
+    return performRequest(() => authRemoteDataSource.loginWithEmailAndPassword(
+        email: email, password: password));
   }
 
   FutureEither<String> performRequest(

@@ -17,8 +17,8 @@ class AppLogger {
     _logger.w(message, stackTrace: StackTrace.current);
   }
 
-  static void error(String message) {
-    _logger.e(message, error: StackTrace.current);
+  static void error(dynamic message) {
+    _logger.e(message, error: message);
   }
 
   static void verbose(String message) {

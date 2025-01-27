@@ -78,6 +78,7 @@ dependencies:
   firebase_core: ^3.10.1
   firebase_auth: ^5.4.1
   firebase_messaging: ^15.1.5
+  cloud_firestore: ^5.6.2
   # Manages local notifications on the device.
   flutter_local_notifications: ^18.0.1
   # A Flutter package for showing loading animations.
@@ -111,6 +112,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/
     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see

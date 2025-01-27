@@ -20,40 +20,54 @@ class ServiceLocator {
 
   /// Initialize External
   static Future<void> external() async {
-    /// External dependencies
     inject.registerLazySingleton(() => InternetConnection());
   }
 
   ///Initialize Features
   static Future<void> initFeatures() async {
-    await registerFeature();
     await authFeature();
-    // Add features here ....
+    await userFeature();
   }
 
   static Future<void> authFeature() async {
     /// Presentation Layer
     // * Bloc
-    // inject.registerFactory(() => AuthBloc(sendOtpUsecase: inject()));
+    inject.registerFactory(() => RegisterBloc(registerUsecase: inject()));
+    inject.registerFactory(() => LoginBloc(loginUsecase: inject()));
+
+    /// Domain Layer
+    // * Use cases
+    inject
+        .registerLazySingleton(() => RegisterUsecase(authRepository: inject()));
+    inject.registerLazySingleton(() => LoginUsecase(authRepository: inject()));
+
+    // * Repositories
+    inject.registerLazySingleton<AuthRepository>(() =>
+        AuthRepository(authRemoteDataSource: inject(), networkInfo: inject()));
+
+    /// Data Layer
+    // * Remote Data Source
+    inject.registerLazySingleton<AuthRemoteDataSource>(
+        () => AuthRemoteDataSource());
+  }
+
+  static Future<void> userFeature() async {
+    /// Presentation Layer
+    // * Bloc
+    inject.registerFactory(() => UserInfoBloc(userInfoRepository: inject()));
 
     /// Domain Layer
     // * Use cases
     inject.registerLazySingleton(
-        () => RegisterUsecase(registerRepository: inject()));
+        () => FetchUserInfoUsecase(userInfoRepository: inject()));
 
     // * Repositories
-    inject.registerLazySingleton<RegisterRepository>(() => RegisterRepository(
-        registerRemoteDataSource: inject(), networkInfo: inject()));
+    inject.registerLazySingleton<UserInfoRepository>(() => UserInfoRepository(
+        userInfoRemoteDataSource: inject(), networkInfo: inject()));
 
     /// Data Layer
     // * Remote Data Source
-    inject.registerLazySingleton<RegisterRemoteDataSource>(
-        () => RegisterRemoteDataSource());
-  }
-
-  static Future<void> registerFeature() async {
-    /// Presentation Layer
-    // * Bloc
-    inject.registerFactory(() => RegisterBloc(registerUsecase: inject()));
+    inject.registerLazySingleton<UserInfoRemoteDataSource>(
+        () => UserInfoRemoteDataSource());
   }
 }

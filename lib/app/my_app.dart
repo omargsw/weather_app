@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    ///TODO : Add design size
     return ScreenUtilInit(
       designSize: const Size(430, 932),
       minTextAdapt: true,
@@ -28,7 +27,6 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: const [Locale('ar'), Locale('en')],
 
-          ///TODO : implement localization
           locale: const Locale('en'),
           theme: lightTheme(),
           darkTheme: darkTheme(),

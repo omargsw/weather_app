@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:weather_app/core/errors/failures.dart';
+import 'package:weather_app/core/images/app_images.dart';
+import 'package:weather_app/core/utils/helpers/app_strings.dart';
 
 import 'app_logger.dart';
 
@@ -47,6 +51,24 @@ class AppFunctions {
     }
   }
 
+    static String mapFailureToMessage({required Failure failure}) {
+    if (failure.errorMessage != null && failure.errorMessage!.isNotEmpty) {
+      return failure.errorMessage!;
+    }
+    switch (failure.runtimeType) {
+      case const (ServerFailure):
+        return AppStrings.serverFailure.tr();
+      case const (NoDataFailure):
+        return AppStrings.serverFailure.tr();
+      case const (NoInternetConnectionFailure):
+        return AppStrings.noInternetConnectionFailure.tr();
+      case const (WrongDataFailure):
+        return failure.errorMessage!;
+      default:
+        return AppStrings.unexpectedError.tr();
+    }
+  }
+
   static Future<List<File>?> uploadMultiImagesFromGallery() async {
     final List<File> selectedImagesList = [];
     final List<File> selectedImagesListPaths = [];
@@ -72,5 +94,17 @@ class AppFunctions {
     if (video == null) return null;
     AppLogger.debug('Video file ---------> ${video.path}');
     return video.path;
+  }
+
+    static String mapFailureToImage(String errorMessage) {
+    if (errorMessage == AppStrings.serverFailure.tr()) {
+      return AppImages.serverFailure;
+    } else if (errorMessage == AppStrings.noInternetConnectionFailure.tr()) {
+      return AppImages.noInternetConnection;
+    } else if (errorMessage == AppStrings.unexpectedError.tr()) {
+      return AppImages.unExpectedError;
+    } else {
+      return AppImages.unExpectedError;
+    }
   }
 }
