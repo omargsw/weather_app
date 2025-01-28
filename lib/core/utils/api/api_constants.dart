@@ -2,9 +2,10 @@ class ApiConstants {
   const ApiConstants._();
 
   /// BASE URL
-  static String baseUrl = '';
+  static String baseUrl = 'https://api.openweathermap.org';
 
   /// END POINTS
+  static String weatherUrl = '/data/2.5/weather';
 
   ///  PARAMS
 

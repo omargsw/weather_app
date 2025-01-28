@@ -27,6 +27,8 @@ class ServiceLocator {
   static Future<void> initFeatures() async {
     await authFeature();
     await userFeature();
+    await weatherFeature();
+    await weatherHistoryFeature();
   }
 
   static Future<void> authFeature() async {
@@ -69,5 +71,47 @@ class ServiceLocator {
     // * Remote Data Source
     inject.registerLazySingleton<UserInfoRemoteDataSource>(
         () => UserInfoRemoteDataSource());
+  }
+
+  static Future<void> weatherFeature() async {
+    /// Presentation Layer
+    // * Bloc
+    inject.registerFactory(() => WeatherBloc(fetchWeatherUsecase: inject()));
+
+    /// Domain Layer
+    // * Use cases
+    inject.registerLazySingleton(
+        () => FetchWeatherUsecase(weatherRepository: inject()));
+
+    // * Repositories
+    inject.registerLazySingleton<WeatherRepository>(() => WeatherRepository(
+        weatherRemoteDataSource: inject(), networkInfo: inject()));
+
+    /// Data Layer
+    // * Remote Data Source
+    inject.registerLazySingleton<WeatherRemoteDataSource>(
+        () => WeatherRemoteDataSource());
+  }
+
+  static Future<void> weatherHistoryFeature() async {
+    /// Presentation Layer
+    // * Bloc
+    inject.registerFactory(
+        () => WeatherHistoryBloc(fetchWeatherHistoryUsecase: inject()));
+
+    /// Domain Layer
+    // * Use cases
+    inject.registerLazySingleton(
+        () => FetchWeatherHistoryUsecase(weatherHistoryRepository: inject()));
+
+    // * Repositories
+    inject.registerLazySingleton<WeatherHistoryRepository>(() =>
+        WeatherHistoryRepository(
+            weatherHistoryRemoteDataSource: inject(), networkInfo: inject()));
+
+    /// Data Layer
+    // * Remote Data Source
+    inject.registerLazySingleton<WeatherHistoryRemoteDataSource>(
+        () => WeatherHistoryRemoteDataSource());
   }
 }

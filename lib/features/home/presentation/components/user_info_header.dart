@@ -50,7 +50,9 @@ class UserInfoHeader extends StatelessWidget {
                 Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.loginScreen, (route) => false);
               },
-              icon: Icon(Icons.logout_outlined)),
+              icon: Icon(context.locale.languageCode == 'ar'
+                  ? Icons.login_outlined
+                  : Icons.logout_outlined)),
         ),
       ],
     );

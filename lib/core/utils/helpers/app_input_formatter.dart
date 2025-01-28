@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class AppInputFormatter {
   AppInputFormatter._();
@@ -9,44 +8,23 @@ class AppInputFormatter {
     return FilteringTextInputFormatter.digitsOnly;
   }
 
-  /// Formatter to format a phone number as it is typed.
-  static TextInputFormatter phoneFormatter() {
+  static TextInputFormatter nameFormatter() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
-      // Only allow up to 10 digits
-      if (newValue.text.length > 10) {
-        return oldValue; // Reject if it exceeds 10 digits
-      }
+      final text = newValue.text;
 
-      // Simple phone formatting logic
-      String formatted = '';
-      if (newValue.text.isNotEmpty) formatted += '(${newValue.text.substring(0, 1)}';
-      if (newValue.text.length >= 3) formatted += '${newValue.text.substring(1, 3)}) ';
-      if (newValue.text.length >= 6) formatted += '${newValue.text.substring(3, 6)}-';
-      if (newValue.text.length >= 10) formatted += newValue.text.substring(6, 10);
+      // Regular expression to allow English and Arabic letters, spaces, and apostrophes
+      final regex = RegExp(r'^[a-zA-Z\u0621-\u064A\u0660-\u0669\s]*$');
+
+      // Remove invalid characters
+      final filteredText =
+          text.split('').where((char) => regex.hasMatch(char)).join();
 
       return TextEditingValue(
-        text: formatted,
-        selection: TextSelection.collapsed(offset: formatted.length),
-      );
-    });
-  }
-
-  /// Formatter for currency input.
-  static TextInputFormatter currencyFormatter() {
-    return TextInputFormatter.withFunction((oldValue, newValue) {
-      // Remove any non-digit characters
-      String newText = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
-      if (newText.isEmpty) {
-        return TextEditingValue.empty;
-      }
-
-      // Format as currency
-      final int amount = int.parse(newText);
-      final String formatted = '\$${NumberFormat('#,##0').format(amount)}';
-
-      return TextEditingValue(
-        text: formatted,
-        selection: TextSelection.collapsed(offset: formatted.length),
+        text: filteredText,
+        selection: newValue.selection.copyWith(
+          baseOffset: filteredText.length,
+          extentOffset: filteredText.length,
+        ),
       );
     });
   }
@@ -65,7 +43,8 @@ class AppInputFormatter {
   static TextInputFormatter dateFormatter() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
       String formatted = '';
-      final digits = newValue.text.replaceAll(RegExp(r'\D'), ''); // Remove non-digit characters
+      final digits = newValue.text
+          .replaceAll(RegExp(r'\D'), ''); // Remove non-digit characters
 
       if (digits.isNotEmpty) formatted += digits.substring(0, 1);
       if (digits.length >= 2) formatted += '/${digits.substring(1, 2)}';

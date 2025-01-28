@@ -14,18 +14,18 @@ Route? onGenerateRoute(RouteSettings settings) {
       return AppPageRoute(builder: (context) => RegisterScreen());
     case AppRoutes.loginScreen:
       return AppPageRoute(builder: (context) => LoginScreen());
-    // case AppRoutes.registerScreen:
-    //   return AppPageRoute(builder: (context) => RegisterScreen());
-    // case AppRoutes.registerScreen:
-    //   return AppPageRoute(builder: (context) => RegisterScreen());
+    case AppRoutes.weatherScreen:
+      return AppPageRoute(builder: (context) => WeatherScreen());
+    case AppRoutes.weatherHistoryScreen:
+      return AppPageRoute(builder: (context) => WeatherHistoryScreen());
 
     default:
       return AppPageRoute(
         builder: (context) {
-          return const Scaffold(
+          return Scaffold(
             body: Center(
               child: Text(
-                AppStrings.undefinedRoute,
+                AppStrings.undefinedRoute.tr(),
               ),
             ),
           );

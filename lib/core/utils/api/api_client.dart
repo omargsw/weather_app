@@ -13,32 +13,21 @@ class ApiClient {
         baseUrl: ApiConstants.baseUrl,
         receiveDataWhenStatusError: true,
         validateStatus: (statusCode) {
-          final validStatusCodes = [200, 201, 204, 202, 400, 401, 404, 405, 500];
+          final validStatusCodes = [
+            200,
+            201,
+            204,
+            202,
+            400,
+            401,
+            404,
+            405,
+            500
+          ];
           return validStatusCodes.contains(statusCode);
         },
       ),
     );
-
-    // TODO: Adding interceptors if needed
-    // dio!.interceptors.add(
-    //   InterceptorsWrapper(
-    //     onResponse: (Response response, ResponseInterceptorHandler handler) async {
-    //       final String? token = await AppSecureStorage.getData(key: AppConstants.accessToken);
-    //
-    //       // Handle token expiration
-    //       if (token != null && response.statusCode == 401) {
-    //         final message = response.data['message'];
-    //         log('Dio interceptor onResponse: $message', name: 'API Client');
-    //         await AppSecureStorage.removeAllData();
-    //       }
-    //       return handler.next(response); // Pass response to the next interceptor
-    //     },
-    //     onError: (DioError e, ErrorInterceptorHandler handler) {
-    //       log("Error response: ${e.response?.statusCode} - ${e.response?.data}", name: "API Client Error");
-    //       return handler.next(e); // Pass the error to the next interceptor
-    //     },
-    //   ),
-    // );
   }
 
   /// Sends a POST request to the given URL with data.
@@ -82,7 +71,8 @@ class ApiClient {
     try {
       return await dio!.post(
         url,
-        options: Options(contentType: ApiConstants.multipartFormData, headers: headers),
+        options: Options(
+            contentType: ApiConstants.multipartFormData, headers: headers),
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
         queryParameters: queryParameters,
@@ -189,8 +179,10 @@ class ApiClient {
   /// Handles error logging and processing.
   static void _handleError(dynamic error) {
     if (error is DioException) {
-      AppLogger.error("Error response {API Client Error} : ${error.response?.statusCode} - ${error.response?.data}");
-      AppLogger.error("Error request {API Client Request}: ${error.requestOptions.uri}");
+      AppLogger.error(
+          "Error response {API Client Error} : ${error.response?.statusCode} - ${error.response?.data}");
+      AppLogger.error(
+          "Error request {API Client Request}: ${error.requestOptions.uri}");
     } else {
       AppLogger.error("Unknown error: ${error.toString()}");
     }

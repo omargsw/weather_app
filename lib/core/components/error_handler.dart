@@ -53,7 +53,8 @@ class ErrorHandler extends StatelessWidget {
                     // AppStrings.errorCode.tr().replaceAll(AppExpressions.textPattern, errorCode!),
                     errorCode!.toSentenceCase(),
                     textAlign: TextAlign.center,
-                    style: lightStyle(fontSize: 16, color: Colors.black, height: 1),
+                    style: lightStyle(
+                        fontSize: 16, color: Colors.black, height: 1),
                   ),
                 ),
               ],
@@ -61,7 +62,9 @@ class ErrorHandler extends StatelessWidget {
               if (onPressed != null)
                 ElevatedButton(
                   onPressed: onPressed,
-                  style: ButtonStyle(minimumSize: WidgetStateProperty.all(buttonSize ?? Size(250, 45))),
+                  style: ButtonStyle(
+                      minimumSize:
+                          WidgetStateProperty.all(buttonSize ?? Size(250, 45))),
                   child: Text(
                     buttonLabel ?? AppStrings.tryAgain.tr(),
                     textAlign: TextAlign.center,

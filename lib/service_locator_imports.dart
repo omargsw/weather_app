@@ -11,5 +11,13 @@ import 'package:weather_app/features/home/data/data_sources/remote/user_info_rem
 import 'package:weather_app/features/home/domain/repositories/user_info_repo.dart';
 import 'package:weather_app/features/home/domain/usecases/fetch_user_info_usecase.dart';
 import 'package:weather_app/features/home/presentation/bloc/user_info_bloc/user_info_bloc.dart';
+import 'package:weather_app/features/weather/data/data_sources/remote/weather_remote_data_source.dart';
+import 'package:weather_app/features/weather/domain/repositories/weather_repo.dart';
+import 'package:weather_app/features/weather/domain/usecases/fetch_weather_usercase.dart';
+import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
+import 'package:weather_app/features/weather_history/data/data_sources/remote/weather_history_remote_data_source.dart';
+import 'package:weather_app/features/weather_history/domain/repositories/weather_history_repo.dart';
+import 'package:weather_app/features/weather_history/domain/usecases/fetch_weather_history_usecase.dart';
+import 'package:weather_app/features/weather_history/presentation/bloc/weather_history_bloc.dart';
 
 part 'service_locator.dart';
