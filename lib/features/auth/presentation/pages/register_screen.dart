@@ -16,6 +16,7 @@ import 'package:weather_app/core/utils/helpers/app_secure_storage.dart';
 import 'package:weather_app/core/utils/helpers/app_snackbar.dart';
 import 'package:weather_app/core/utils/helpers/app_validator.dart';
 import 'package:weather_app/features/auth/presentation/bloc/register_bloc/register_bloc.dart';
+import 'package:weather_app/features/home/presentation/bloc/cubit/theme_cubit.dart';
 import 'package:weather_app/service_locator_imports.dart';
 
 import '../../../../core/utils/helpers/app_input_formatter.dart';
@@ -165,6 +166,9 @@ class LoginAndRegisterRichText extends StatelessWidget {
             : "${AppStrings.haveAccount.tr()} ",
         style: mediumStyle(
           fontSize: 14,
+          color: BlocProvider.of<ThemeCubit>(context).state
+              ? Colors.white
+              : Colors.black,
         ),
         children: [
           TextSpan(

@@ -230,7 +230,7 @@ class Wind extends Equatable {
 
   factory Wind.fromJson(Map<String, dynamic> json) {
     return Wind(
-      speed: json["speed"] ?? 0.0,
+      speed: json["speed"] != null ? json["speed"].toDouble() : 0.0,
       deg: json["deg"] ?? 0,
       gust: json["gust"] ?? 0.0,
     );

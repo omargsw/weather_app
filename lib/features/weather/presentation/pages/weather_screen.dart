@@ -15,8 +15,15 @@ import 'package:weather_app/core/utils/helpers/app_validator.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/service_locator_imports.dart';
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  bool isCelsius = true;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +120,7 @@ class WeatherScreen extends StatelessWidget {
                             ),
                             Gap(10),
                             Text(
-                              '${state.weatherData.main!.temp}°C',
+                              '${convertTemperature(state.weatherData.main!.temp).toStringAsFixed(1)}°${isCelsius ? 'C' : 'F'}',
                               style: boldStyle(fontSize: 30),
                             ),
                             Gap(10),
@@ -138,6 +145,20 @@ class WeatherScreen extends StatelessWidget {
                                     fontSize: 18, color: Colors.grey),
                               ),
                             ],
+                            Gap(10),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isCelsius = !isCelsius;
+                                  });
+                                },
+                                child: Text(
+                                  '${AppStrings.switchTo.tr()} ${isCelsius ? AppStrings.fahrenheit.tr() : AppStrings.celsius.tr()}',
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -149,5 +170,9 @@ class WeatherScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  double convertTemperature(double temp) {
+    return isCelsius ? temp : (temp * 9 / 5) + 32;
   }
 }

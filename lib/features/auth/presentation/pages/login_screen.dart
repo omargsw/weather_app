@@ -86,10 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             icon: Icon(bloc.obscurePass
                                 ? Icons.visibility
                                 : Icons.visibility_off)),
-                        inputFormatters: [
-                          AppInputFormatter.emailFormatter(),
-                        ],
-                        validator: AppValidator.validatePassword,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppStrings.errorEmptyField.tr();
+                          }
+                          return null;
+                        },
                         obscureText: bloc.obscurePass,
                       ),
                       Gap(60),
