@@ -8,6 +8,7 @@ import 'package:weather_app/core/components/custom_text_form_field.dart';
 import 'package:weather_app/core/images/app_images.dart';
 import 'package:weather_app/core/styles/app_text_style.dart';
 import 'package:weather_app/core/utils/helpers/app_constants.dart';
+import 'package:weather_app/core/utils/helpers/app_functions.dart';
 import 'package:weather_app/core/utils/helpers/app_logger.dart';
 import 'package:weather_app/core/utils/helpers/app_secure_storage.dart';
 import 'package:weather_app/core/utils/helpers/app_snackbar.dart';
@@ -96,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         title: AppStrings.login.tr(),
                         onPressed: () {
                           if (bloc.formKey.currentState!.validate()) {
+                            AppFunctions.unFocusKeyboard(context);
                             bloc.add(LoginnEvent());
                           }
                         },

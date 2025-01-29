@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SplashFinishedState) {
             Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.homeScreen, (route) => false);
+                context, AppRoutes.loginScreen, (route) => false);
           }
         },
         child: Scaffold(

@@ -22,7 +22,7 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   ServiceLocator.init();
   ApiClient.init();
-  AppCache.init();
+  await AppCache.init();
   AppSecureStorage.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Bloc.observer = MyBlocObserver();

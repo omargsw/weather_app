@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:weather_app/core/locale/app_locale.dart';
@@ -20,9 +21,11 @@ class LanguageChanging {
   Future<String> getAppLanguage() async {
     final String? language = AppCache.getData(key: AppConstants.chosenLang);
     if (language != null && language.isNotEmpty) {
+      log(language, name: "language");
+
       return language;
     } else {
-      return LanguageType.arabic.getValue();
+      return LanguageType.english.getValue();
     }
   }
 
@@ -31,11 +34,15 @@ class LanguageChanging {
 
     if (currentLang == LanguageType.arabic.getValue()) {
       // set english
-      AppCache.saveData(key: AppConstants.chosenLang, value: LanguageType.english.getValue());
+      AppCache.saveData(
+          key: AppConstants.chosenLang, value: LanguageType.english.getValue());
     } else {
       // set arabic
-      AppCache.saveData(key: AppConstants.chosenLang, value: LanguageType.arabic.getValue());
+      AppCache.saveData(
+          key: AppConstants.chosenLang, value: LanguageType.arabic.getValue());
     }
+
+    log(AppCache.getData(key: AppConstants.chosenLang), name: "language");
   }
 
   Future<Locale> getLocale() async {

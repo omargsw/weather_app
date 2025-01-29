@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather_app/app/config/routing/app_router.dart';
 import 'package:weather_app/core/components/error_handler.dart';
-import 'package:weather_app/core/utils/helpers/app_cache.dart';
-import 'package:weather_app/core/utils/helpers/app_constants.dart';
+import 'package:weather_app/core/locale/app_languages.dart';
 import 'package:weather_app/core/utils/helpers/app_strings.dart';
 import 'package:weather_app/features/home/presentation/bloc/cubit/theme_cubit.dart';
 import 'package:weather_app/features/home/presentation/bloc/user_info_bloc/user_info_bloc.dart';
@@ -94,14 +93,11 @@ class _HomeScreenState extends State<HomeScreen>
                               if (selectedLanguage == 'English') {
                                 await context
                                     .setLocale(const Locale('ar', 'SA'));
-                                AppCache.saveData(
-                                    key: AppConstants.chosenLang, value: 'ar');
                               } else {
                                 await context
                                     .setLocale(const Locale('en', 'US'));
-                                AppCache.saveData(
-                                    key: AppConstants.chosenLang, value: 'en');
                               }
+                              LanguageChanging().changeAppLanguage();
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   AppRoutes.homeScreen, (route) => false);
                             },
