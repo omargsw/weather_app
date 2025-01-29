@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/styles/app_colors.dart';
 import 'package:weather_app/core/styles/app_text_style.dart';
 
@@ -11,11 +12,11 @@ ThemeData darkTheme() {
     hoverColor: Colors.transparent,
     // fontFamily: AppFontConstants.fontFamily,
     primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: AppColors.black,
+    scaffoldBackgroundColor: AppColors.dark,
     brightness: Brightness.dark,
-    // elevatedButtonTheme: _elevatedButtonTheme(),
+    elevatedButtonTheme: _elevatedButtonTheme(),
     // textButtonTheme: _textButtonTheme(),
-    // inputDecorationTheme: _inputDecorationTheme(),
+    inputDecorationTheme: _inputDecorationTheme(),
     appBarTheme: _appBarTheme(),
     // cardTheme: _cardTheme(),
 
@@ -28,7 +29,7 @@ ThemeData darkTheme() {
 AppBarTheme _appBarTheme() {
   return AppBarTheme(
       elevation: 0,
-      backgroundColor: AppColors.black,
+      backgroundColor: AppColors.dark,
       centerTitle: true,
       titleTextStyle: boldStyle(
         fontSize: 18,
@@ -36,83 +37,69 @@ AppBarTheme _appBarTheme() {
       ));
 }
 
-// ElevatedButtonThemeData _elevatedButtonTheme() {
-//   return ElevatedButtonThemeData(
-//     style: ButtonStyle(
-//       backgroundColor: MaterialStateProperty.all(AppColors.secondaryColor),
-//       shape: MaterialStateProperty.all(
-//         RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(90.r),
-//         ),
-//       ),
-//       padding: MaterialStateProperty.all(
-//         EdgeInsets.symmetric(
-//           vertical: 10.h,
-//           horizontal: 60.w,
-//         ),
-//       ),
-//       foregroundColor: MaterialStateProperty.all(AppColors.whiteColor),
-//       textStyle: MaterialStateProperty.all(
-//         regularStyle(
-//           fontFamily: AppFontConstants.fontFamily,
-//           fontSize: AppFontSizes.s20.sp,
-//           color: AppColors.whiteColor,
-//         ),
-//       ),
-//     ),
-//   );
-// }
+ElevatedButtonThemeData _elevatedButtonTheme() {
+  return ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStateProperty.all(AppColors.primary),
+      minimumSize: WidgetStateProperty.all(Size(double.infinity, 50)),
+      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          5,
+        ),
+      )),
+      foregroundColor: WidgetStateProperty.all(AppColors.black),
+      shadowColor: WidgetStateProperty.all(AppColors.black),
+      elevation: WidgetStateProperty.all(0),
+      padding: WidgetStateProperty.all(EdgeInsets.all(3.r)),
+      textStyle: WidgetStateProperty.all(
+        boldStyle(
+          fontSize: 16.sp,
+          color: AppColors.black,
+        ),
+      ),
+    ),
+  );
+}
 
-// TextButtonThemeData _textButtonTheme() {
-//   return TextButtonThemeData(
-//     style: ButtonStyle(
-//       foregroundColor: MaterialStateProperty.all(AppColors.secondaryColor),
-//       textStyle: MaterialStateProperty.all(
-//         regularStyle(
-//           fontSize: 14.sp,
-//           color: AppColors.secondaryColor,
-//           fontFamily: AppFontConstants.fontFamily,
-//         ),
-//       ),
-//     ),
-//   );
-// }
-
-// InputDecorationTheme _inputDecorationTheme() {
-//   return InputDecorationTheme(
-//     filled: true,
-//     fillColor: AppColors.darkThemeBackGroundColor,
-//     hintStyle: regularStyle(
-//       fontSize: AppFontSizes.s15.sp,
-//       color: AppColors.whiteColor,
-//     ),
-//     errorStyle: regularStyle(
-//       color: AppColors.whiteColor,
-//       fontSize: 14.0.sp,
-//     ),
-//     errorMaxLines: 1,
-//     enabledBorder: OutlineInputBorder(
-//       borderRadius: BorderRadius.circular(100.r),
-//       borderSide: BorderSide(color: Colors.grey.withOpacity(0.5)),
-//     ),
-//     focusedBorder: OutlineInputBorder(
-//       borderRadius: BorderRadius.circular(100.r),
-//       borderSide: BorderSide(color:AppColors.whiteColor),
-//     ),
-//     labelStyle: regularStyle(
-//       fontSize: AppFontSizes.s18.sp,
-//       color: AppColors.whiteColor,
-//     ),
-//     isDense: true,
-//     contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-//     border: OutlineInputBorder(borderRadius: BorderRadius.circular(100.r), borderSide: BorderSide.none),
-//     errorBorder: OutlineInputBorder(
-//       borderRadius: BorderRadius.circular(100.r),
-//       borderSide: BorderSide(color: AppColors.whiteColor),
-//     ),
-//   );
-// }
-
+InputDecorationTheme _inputDecorationTheme() {
+  return InputDecorationTheme(
+    filled: true,
+    fillColor: AppColors.primary.withValues(alpha: 0.2),
+    hintStyle: lightStyle(
+      fontSize: 16,
+      color: AppColors.formFieldFillColor,
+      height: 1,
+    ),
+    errorStyle: lightStyle(
+      color: Colors.red,
+      fontSize: 16,
+      height: 1,
+    ),
+    errorMaxLines: 1,
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: const BorderSide(color: Colors.transparent),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: const BorderSide(color: Colors.black),
+    ),
+    isDense: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: BorderSide.none,
+    ),
+    labelStyle:
+        lightStyle(fontSize: 16, height: 1, color: AppColors.bluishColor),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: BorderSide(
+        color: Colors.red,
+      ),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+  );
+}
 // BottomNavigationBarThemeData _bottomNavigationBarTheme() {
 //   return BottomNavigationBarThemeData(
 //     backgroundColor: AppColors.secondaryColor,

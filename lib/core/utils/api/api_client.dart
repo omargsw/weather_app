@@ -91,20 +91,20 @@ class ApiClient {
     Map<String, dynamic>? headers,
     String contentType = ApiConstants.applicationJson,
   }) async {
-    try {
-      return await dio!.get(
-        url,
-        options: Options(
-          receiveDataWhenStatusError: true,
-          headers: headers,
-          contentType: contentType,
-        ),
-        queryParameters: queryParameters,
-      );
-    } catch (error) {
-      _handleError(error);
-      throw Exception("API request failed: $error");
-    }
+    // try {
+    return await dio!.get(
+      url,
+      options: Options(
+        receiveDataWhenStatusError: true,
+        headers: headers,
+        contentType: contentType,
+      ),
+      queryParameters: queryParameters,
+    );
+    // } catch (error) {
+    //   _handleError(error);
+    //   throw Exception("API request failed: $error");
+    // }
   }
 
   /// Sends a DELETE request to the given URL.

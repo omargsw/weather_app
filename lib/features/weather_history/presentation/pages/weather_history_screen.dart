@@ -59,7 +59,7 @@ class _WeatherHistoryScreenState extends State<WeatherHistoryScreen>
           builder: (context, state) {
             final bloc = context.read<WeatherHistoryBloc>();
             if (state is WeatherHistoryLoadingState) {
-              return Center(child: CircularProgressIndicator.adaptive());
+              return Center();
             } else if (state is WeatherHistoryErrorState) {
               return ErrorHandler(
                 message: state.message,
@@ -91,7 +91,7 @@ class _WeatherHistoryScreenState extends State<WeatherHistoryScreen>
                       ),
               );
             }
-            return Center(child: CircularProgressIndicator.adaptive());
+            return Center();
           },
         ),
       ),

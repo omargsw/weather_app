@@ -39,31 +39,10 @@ class AppStrings {
   static const String weatherHistory = "weatherHistory";
   static const String noHistory = "noHistory";
   static const String ms = "ms";
-  // static const register = 'Register';
-  // static const login = 'Login';
-  // static const email = 'Email address';
-  // static const password = 'Password';
-  // static const confirmPassword = 'Confirm password';
-  // static const haveAccount = 'You already have account?';
-  // static const haveNotAccount = "Don't have an account?";
-  // static const loginNow = "Login now";
-  // static const registerNow = "Register now";
-  // static const passwordNotMatch = "Passwords don't match";
-  // static const passwordErrorMessage =
-  //     "Password must include at least one uppercase letter, one lowercase letter, and one number";
-  // static const passwordErrorlong =
-  //     "Password must be at least 8 characters long";
-  // static const invalidEmail = "Invalid email address";
-
-  // static const welcomeBack = "Welcome Back,";
-  // static const weather = "Weather";
-  // static const accountRegisteredSuccessfully =
-  //     "Account registered successfully";
-  // static const enterCityName = "Enter City Name";
-  // static const humidity = "Humidity";
-  // static const windSpeed = "Wind Speed";
-  // static const fetchWeather = "Fetch Weather";
-  // static const weatherHistory = "Weather History";
-  // static const noHistory = "No history found";
-  // static const ms = "m/s"; // متر/ثانية
+  static const String switchTo = "switchTo";
+  static const String fahrenheit = "fahrenheit";
+  static const String celsius = "celsius";
+  static const String dark = "dark";
+  static const String light = "light";
+  static const String home = "home";
 }

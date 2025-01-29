@@ -163,7 +163,6 @@ class LoginAndRegisterRichText extends StatelessWidget {
             : "${AppStrings.haveAccount.tr()} ",
         style: mediumStyle(
           fontSize: 14,
-          color: AppColors.black,
         ),
         children: [
           TextSpan(

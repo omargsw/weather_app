@@ -31,5 +31,11 @@
     "fetchWeather": "Fetch Weather",
     "weatherHistory": "Weather History",
     "noHistory": "No history found",
-    "ms": "m/s"
+    "ms": "m/s",
+    "fahrenheit": "Fahrenheit",
+    "celsius": "Celsius",
+    "switchTo": "Switch to",
+    "light": "Light mode",
+    "dark": "Dark mode",
+    "home": "Home"
 }

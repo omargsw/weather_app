@@ -60,20 +60,7 @@ ElevatedButtonThemeData _elevatedButtonTheme() {
   );
 }
 
-// TextButtonThemeData _textButtonTheme() {
-//   return TextButtonThemeData(
-//     style: ButtonStyle(
-//       foregroundColor: MaterialStateProperty.all(AppColors.primaryColor),
-//       textStyle: MaterialStateProperty.all(
-//         mediumStyle(
-//           fontSize: 16.sp,
-//           color: AppColors.primaryColor,
-//           fontFamily: AppFontConstants.fontFamily,
-//         ),
-//       ),
-//     ),
-//   );
-// }
+
 
 InputDecorationTheme _inputDecorationTheme() {
   return InputDecorationTheme(

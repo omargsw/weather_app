@@ -53,6 +53,7 @@ class WeatherScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (bloc.formKey.currentState!.validate()) {
+                          AppFunctions.unFocusKeyboard(context);
                           bloc.add(FetchWeatherEvent(
                               cityName: bloc.cityNameController.text));
                         }

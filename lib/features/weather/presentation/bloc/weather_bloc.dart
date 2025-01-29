@@ -4,9 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/core/utils/helpers/app_constants.dart';
 import 'package:weather_app/core/utils/helpers/app_functions.dart';
+import 'package:weather_app/core/utils/helpers/app_logger.dart';
 import 'package:weather_app/core/utils/helpers/app_secure_storage.dart';
 import 'package:weather_app/features/weather/data/models/weather_model.dart';
 import 'package:weather_app/features/weather/domain/usecases/fetch_weather_usercase.dart';
@@ -20,6 +23,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   final FetchWeatherUsecase fetchWeatherUsecase;
   WeatherBloc({required this.fetchWeatherUsecase}) : super(WeatherInitial()) {
+    _initializeLocation();
     on<WeatherEvent>((event, emit) async {
       if (event is FetchWeatherEvent) {
         emit(WeatherLoadingState());
@@ -87,5 +91,46 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     } catch (e) {
       log("Error saving weather data to Firestore: $e");
     }
+  }
+
+  void _initializeLocation() async {
+    String? city = await getCityName();
+    log(city ?? "Error fetching city", name: "city");
+    if (city != null && city != "Error fetching city") {
+      add(FetchWeatherEvent(cityName: city));
+    }
+  }
+
+  Future<String?> getCityName() async {
+    try {
+      // Check location permissions
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return "Location permission denied";
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
+        return "Location permission permanently denied";
+      }
+
+      // Get current location
+      Position position = await Geolocator.getCurrentPosition();
+
+      // Reverse geocoding to get city name
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        return placemarks.first.locality; // City name
+      }
+    } catch (e) {
+      AppLogger.error("Error getting location: $e");
+      return "Error fetching city";
+    }
+    return null;
   }
 }
