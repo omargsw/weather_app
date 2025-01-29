@@ -103,7 +103,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   Future<String?> getCityName() async {
     try {
-      // Check location permissions
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -115,10 +114,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         return "Location permission permanently denied";
       }
 
-      // Get current location
       Position position = await Geolocator.getCurrentPosition();
 
-      // Reverse geocoding to get city name
       List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,

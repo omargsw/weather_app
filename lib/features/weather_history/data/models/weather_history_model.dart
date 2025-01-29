@@ -21,7 +21,6 @@ class HistoryModel {
     required this.timestamp,
   });
 
-  // Factory constructor to create a HistoryModel from Firestore data
   factory HistoryModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
 
@@ -37,7 +36,6 @@ class HistoryModel {
     );
   }
 
-  // Method to convert HistoryModel to a Map for Firestore saving
   Map<String, dynamic> toMap() {
     return {
       'city': city,

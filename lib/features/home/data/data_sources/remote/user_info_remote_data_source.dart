@@ -14,14 +14,12 @@ class UserInfoRemoteDataSource {
           await FirebaseFirestore.instance.collection('users').doc(uuid).get();
 
       if (document.exists && document.data() != null) {
-        // Map Firestore data to UserModel
         return UserModel.fromMap(document.data()!);
       } else {
         throw ServerException(errorMessage: 'User with UUID $uuid not found.');
       }
     } catch (e) {
       AppLogger.warning('Error fetching user info: $e');
-      // throw Exception('Failed to fetch user information: $e');
       throw ServerException(
           errorMessage: 'Failed to fetch user information: $e');
     }
